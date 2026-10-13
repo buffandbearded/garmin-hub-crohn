@@ -2,7 +2,7 @@
 
 A personal health and training dashboard that runs entirely on your own computer. It pulls your data from Garmin Connect (built around a Fenix 7, but any Garmin that syncs to Garmin Connect works) and combines it with things Garmin doesn't track: food, lifting sets, symptoms and lab results.
 
-Flask + SQLite + vanilla JS + Chart.js. No accounts, no cloud, no tracking. Everything is stored in a single local file, `hub.db`.
+Flask + SQLite + vanilla JS + Chart.js. No accounts, no cloud, no tracking. Everything is stored in a single local file, `hub.db`. It also works from your phone (see [Use it on your phone](#use-it-on-your-phone)).
 
 ![Overview](docs/screenshots/overview.png)
 
@@ -54,6 +54,27 @@ python3 -m venv .venv
 .venv/bin/python sync.py --days 400
 .venv/bin/python app.py           # open http://localhost:5055
 ```
+
+## Use it on your phone
+
+The layout is responsive: on a phone the tabs become one swipeable row, tables scroll inside their cards, and the workout detail opens full-screen.
+
+To reach the hub from your phone when you're away from home, use [Tailscale](https://tailscale.com) (free for personal use). It creates a private network between your own devices, so the hub is never exposed to the open internet.
+
+1. Install Tailscale on the computer that runs the hub and on your phone, and sign in to the same account on both.
+2. Start the hub (`start.bat`, or `python app.py`).
+3. On the computer, run once (a terminal opened as administrator can help the first time):
+
+   ```
+   tailscale serve --bg 5055
+   ```
+
+   If it says Serve is not enabled, open the link it prints, enable it, and run the command again. It then prints an address like `https://your-pc.your-tailnet.ts.net`. The setting is remembered across reboots.
+4. On your phone, turn Tailscale on and open that address. On iPhone you can use Share → **Add to Home Screen** for an app-style icon.
+
+The computer has to be on, awake and running the hub for the page to load. The hub itself keeps listening on `127.0.0.1` only; Tailscale forwards to it privately.
+
+> Do not use port forwarding or Tailscale Funnel for this. The hub has no login, so it must only be reachable from your own devices.
 
 ## How things work
 
