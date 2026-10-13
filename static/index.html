@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f1115">
+<title>Garmin Hub</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/static/style.css?v=5">
+</head>
+<body>
+<header>
+  <h1>Garmin Hub</h1>
+  <div class="row" style="margin:0">
+    <span class="sub" id="status"></span>
+    <button class="ghost" id="syncBtn">Sync Garmin</button>
+  </div>
+</header>
+<nav id="tabs"></nav>
+<main>
+
+<section id="overview">
+  <div class="grid" id="cards"></div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card wide"><h3>What the data says</h3><div id="insights"></div></div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="grid">
+    <div class="card wide"><h3>Goals</h3>
+      <div class="row" id="goalForm"></div>
+      <div class="note">Defaults I set as placeholders (you didn't specify them): protein 2.0 g/kg, fat 25% of calories, 5 meals a day, sleep 8 h, 4 workouts/week. Change them to what suits you.</div>
+    </div>
+  </div>
+  <div class="grid" id="planCards" style="margin-top:14px"></div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card wide"><h3>Pace check and advice</h3><div id="planNotes"></div></div>
+    <div class="card wide"><h3>Eating plan per day</h3><div id="planMeals"></div></div>
+  </div>
+</section>
+
+<section id="body">
+  <div class="grid">
+    <div class="card wide"><h3>Log (optional, fills gaps Garmin doesn't have)</h3>
+      <div class="row">
+        <label>Date<input type="date" id="lg_date"></label>
+        <label>Weight (kg)<input type="number" step="0.1" id="lg_w" style="width:100px"></label>
+        <label>Waist (cm)<input type="number" step="0.5" id="lg_h" style="width:100px"></label>
+        <label>Calories eaten<input type="number" id="lg_k" style="width:120px"></label>
+        <label>Protein (g)<input type="number" id="lg_p" style="width:100px"></label>
+        <button class="act" id="lg_btn">Save</button>
+      </div>
+      <div class="sub" style="margin-top:6px">Waist: measure at the navel, relaxed, same time each week. It is the simplest way to see if gained weight is mostly fat.</div>
+    </div>
+    <div class="card wide"><h3>Weight (daily and 7-day average)<span id="wTarget" style="text-transform:none;letter-spacing:0;font-weight:400"></span></h3><div class="chart"><canvas id="c_weight"></canvas></div></div>
+    <div class="card half"><h3>Calories: eaten vs burned</h3><div class="chart"><canvas id="c_kcal"></canvas></div></div>
+    <div class="card half"><h3>Protein vs target</h3><div class="chart"><canvas id="c_protein"></canvas></div></div>
+    <div class="card wide"><h3>Waist circumference</h3><div class="chart"><canvas id="c_waist"></canvas></div></div>
+    <div class="card wide"><h3>Body fat % and muscle mass (if your scale/watch records them)</h3><div class="chart"><canvas id="c_comp"></canvas></div></div>
+  </div>
+</section>
+
+<section id="sleep">
+  <div class="grid">
+    <div class="card wide"><h3>Sleep stages (hours)</h3><div class="chart"><canvas id="c_sleep"></canvas></div></div>
+    <div class="card wide"><h3>Sleep score</h3><div class="chart"><canvas id="c_score"></canvas></div></div>
+  </div>
+</section>
+
+<section id="training">
+  <div class="grid">
+    <div class="card half"><h3>Sessions per week</h3><div class="chart"><canvas id="c_sessions"></canvas></div></div>
+    <div class="card half"><h3>Weekly training load</h3><div class="chart"><canvas id="c_load"></canvas></div></div>
+    <div class="card wide"><h3>Recent workouts <span class="sub" style="text-transform:none;letter-spacing:0;font-weight:400">· click one for map, charts and splits</span></h3><div id="acts"></div></div>
+  </div>
+</section>
+
+<section id="recovery">
+  <div class="grid">
+    <div class="card wide"><h3>HRV (nightly avg) with 28-day baseline</h3><div class="chart"><canvas id="c_hrv"></canvas></div></div>
+    <div class="card half"><h3>Resting heart rate</h3><div class="chart"><canvas id="c_rhr"></canvas></div></div>
+    <div class="card half"><h3>Body Battery (daily high / low)</h3><div class="chart"><canvas id="c_bb"></canvas></div></div>
+  </div>
+</section>
+
+<section id="crohn"></section>
+<section id="labs"></section>
+<section id="lift"></section>
+<section id="program"></section>
+
+<section id="recipes">
+  <div class="card">
+    <h3>Recepti</h3>
+    <div class="sub" id="recTarget"></div>
+    <div class="chips" id="recChips"></div>
+    <div class="row" style="margin-top:0"><input id="recSearch" placeholder="Traži recept…" style="width:260px"></div>
+    <div class="note" id="recInfo"></div>
+  </div>
+  <div id="recList" style="margin-top:14px"></div>
+</section>
+
+<section id="food">
+  <div class="grid">
+    <div class="card wide"><h3>Food reaction log</h3>
+      <div class="sub">Log a meal, then add how you felt later (you can edit an entry afterwards). Rate "reaction" with your own judgement.</div>
+      <div class="row">
+        <label>Date<input type="date" id="f_date"></label>
+        <label>Time<input type="time" id="f_time"></label>
+        <label>Meal<select id="f_meal"><option>breakfast</option><option>lunch</option><option>dinner</option><option>snack</option></select></label>
+        <label>Foods (comma separated)<input id="f_foods" style="width:320px" placeholder="e.g. chicken, rice, carrots"></label>
+        <label>Recipe (optional)<input id="f_recipe" style="width:200px"></label>
+      </div>
+      <div class="row">
+        <label class="chk"><input type="checkbox" id="f_gluten"> contains gluten</label>
+        <label class="chk"><input type="checkbox" id="f_lactose"> contains lactose</label>
+      </div>
+      <div class="row">
+        <label>Reaction<select id="f_reaction"><option value="">not rated yet</option><option value="0">none</option><option value="1">mild</option><option value="2">bad</option></select></label>
+        <label>Pain 0-10<input type="number" min="0" max="10" id="f_pain" style="width:80px"></label>
+        <label>Bloating 0-10<input type="number" min="0" max="10" id="f_bloat" style="width:80px"></label>
+        <label>Nausea 0-10<input type="number" min="0" max="10" id="f_nausea" style="width:80px"></label>
+        <label>Toilet visits after<input type="number" min="0" id="f_toilet" style="width:100px"></label>
+        <label class="chk"><input type="checkbox" id="f_blood"> blood noticed</label>
+        <label>Notes<input id="f_notes" style="width:240px"></label>
+        <button class="act" id="f_save">Save entry</button>
+        <button class="ghost" id="f_clear">Clear</button>
+      </div>
+      <div class="note">Blood in stool, severe or worsening pain, fever or repeated vomiting: contact your doctor, don't wait for patterns in this log.</div>
+    </div>
+    <div class="card wide"><h3>Patterns</h3><div id="foodAnalysis"></div></div>
+    <div class="card wide"><h3>Entries</h3><div id="foodList"></div></div>
+  </div>
+</section>
+
+<section id="meds">
+  <div class="grid">
+    <div class="card wide"><h3>My medication</h3>
+      <div class="row">
+        <label>Name<input id="m_name" placeholder="e.g. Prednisone"></label>
+        <label>Dose<input id="m_dose" placeholder="e.g. 10 mg" style="width:110px"></label>
+        <label>Schedule<input id="m_sched" placeholder="e.g. mornings" style="width:140px"></label>
+        <label>Started<input type="date" id="m_start"></label>
+        <label>Notes<input id="m_notes" style="width:200px"></label>
+        <button class="act" id="m_add">Add</button>
+      </div>
+      <div id="medlist" style="margin-top:12px"></div>
+    </div>
+    <div class="card wide"><h3>How these may affect training, sleep and recovery</h3><div id="medinfo"></div>
+      <div class="note">General reference, not medical advice. Effects vary with dose and duration, and I can't know your regimen from here. Confirm changes with your gastroenterologist or pharmacist.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="/static/charts.js?v=3"></script>
+<script src="/static/ui.js?v=3"></script>
+<script src="/static/knowledge.js?v=3"></script>
+<script src="/static/crohn.js?v=3"></script>
+<script src="/static/lift.js?v=3"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/static/activity.js?v=2"></script>
+<script>
+const TABS=[["overview","Overview"],["plan","Plan & Goals"],["body","Body & Calories"],["sleep","Sleep"],["training","Training"],["recovery","Recovery"],["crohn","Crohn's"],["labs","Labs"],["lift","Lifting"],["program","Program"],["recipes","Recepti"],["food","Food log"],["meds","Medication"]];
+let D=null,MI={},RC=null,FOOD=[],charts={},RECSTATE={tags:new Set(),q:"",scale:{}};
+const $=id=>document.getElementById(id);
+const avg=a=>{a=a.filter(v=>v!=null&&!isNaN(v));return a.length?a.reduce((x,y)=>x+y,0)/a.length:null};
+const fmt=(v,d=1)=>v==null||isNaN(v)?"–":(+v).toFixed(d);
+const col=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const iso=d=>d.toISOString().slice(0,10);
+const todayIso=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const daysAgo=n=>{const d=new Date();d.setDate(d.getDate()-n);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const lastN=(rows,n)=>rows.slice(-n);
+const rolling=(vals,n)=>vals.map((_,i)=>avg(vals.slice(Math.max(0,i-n+1),i+1)));
+const dayIdx=s=>Math.round(new Date(s+"T00:00:00Z")/86400000);
+function slope(pts){const n=pts.length;if(n<2)return null;const mx=avg(pts.map(p=>p.x)),my=avg(pts.map(p=>p.y));let num=0,den=0;pts.forEach(p=>{num+=(p.x-mx)*(p.y-my);den+=(p.x-mx)**2});return den?num/den:null}
+function mondayOf(s){const d=new Date(s+"T00:00:00");const k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return iso(new Date(d.getTime()-d.getTimezoneOffset()*60000))}
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+async function load(){
+  D=await (await fetch("/api/data")).json();
+  MI=await (await fetch("/api/medinfo")).json();
+  FOOD=await (await fetch("/api/food")).json();
+  if(window.loadExtra)await loadExtra();
+  const n=D.daily.length;
+  $("status").textContent=n?`${n} days · latest ${D.daily[n-1].date}`:"No data yet. Run sync or demo.py.";
+  render();
+}
+
+function tabs(){
+  $("tabs").innerHTML=TABS.map(([k,l])=>`<button data-t="${k}">${l}</button>`).join("");
+  $("tabs").onclick=e=>{const t=e.target.dataset.t;if(!t)return;show(t)};
+}
+function show(t){
+  document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===t));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+  location.hash=t;
+  if(D)render();
+}
+function render(){
+  const on=document.querySelector("section.on")?.id||"overview";
+  ({overview,plan:renderPlan,body:renderBody,sleep:renderSleep,training:renderTraining,recovery:renderRecovery,crohn:renderCrohn,labs:renderLabs,lift:renderLift,program:renderProgram,recipes:renderRecipes,food:renderFood,meds:renderMeds}[on]||overview)();
+}
+
+/* ---------- plan engine ---------- */
+function planCalc(){
+  const S=D.settings,dl=D.daily,today=todayIso(),c28=daysAgo(28);
+  const wAll=dl.filter(d=>d.weight_kg!=null);
+  const wNow=avg(wAll.slice(-7).map(d=>d.weight_kg));
+  const w28=wAll.filter(d=>d.date>=c28);
+  const span=w28.length>1?dayIdx(w28[w28.length-1].date)-dayIdx(w28[0].date):0;
+  const sl=(w28.length>=8&&span>=14)?slope(w28.map(d=>({x:dayIdx(d.date),y:d.weight_kg}))):null;
+  const rate=sl==null?null:sl*7;
+  const intake=dl.filter(d=>d.date>=c28&&d.date<today&&d.kcal_in!=null&&d.kcal_in>0);
+  let maint=null,method=null;
+  if(intake.length>=14&&sl!=null){maint=avg(intake.map(d=>d.kcal_in))-sl*7700;method="adaptive"}
+  else{const g=dl.filter(d=>d.date>=daysAgo(14)&&d.date<today&&d.kcal_total);if(g.length>=5){maint=avg(g.map(d=>d.kcal_total));method="garmin"}}
+  const pace=+S.pace_kg_week,tw=+S.target_weight;
+  const surplus=pace*1100;
+  const target=maint!=null?maint+surplus:null;
+  const prot=wNow!=null?(+S.protein_g_per_kg)*wNow:null;
+  const fat=target!=null?(+S.fat_pct/100)*target/9:null;
+  const carbs=target!=null&&prot!=null?(target-4*prot-9*fat)/4:null;
+  const toGo=wNow!=null?tw-wNow:null;
+  const weeks=toGo!=null&&pace>0?toGo/pace:null;
+  const eta=weeks!=null&&weeks>0?new Date(Date.now()+weeks*7*864e5):null;
+  const wc=dl.filter(d=>d.waist_cm!=null&&d.date>=daysAgo(28));
+  const waistDelta=wc.length>=2?wc[wc.length-1].waist_cm-wc[0].waist_cm:null;
+  const wDelta=w28.length>=2?avg(w28.slice(-3).map(d=>d.weight_kg))-avg(w28.slice(0,3).map(d=>d.weight_kg)):null;
+  return {S,wNow,rate,maint,method,pace,tw,surplus,target,prot,fat,carbs,toGo,weeks,eta,waistDelta,wDelta,intakeDays:intake.length,weightPts:w28.length};
+}
+
+function renderPlan(){
+  const P=planCalc(),S=D.settings;
+  const fields=[["target_weight","Target weight (kg)",0.5],["height_cm","Height (cm)",1],["pace_kg_week","Pace (kg/week)",0.05],["protein_g_per_kg","Protein (g per kg)",0.1],["fat_pct","Fat (% of calories)",1],["meals_per_day","Meals per day",1],["sleep_target_h","Sleep target (h)",0.5],["workouts_per_week","Workouts / week",1]];
+  $("goalForm").innerHTML=fields.map(([k,l,st])=>`<label>${l}<input data-k="${k}" type="number" step="${st}" value="${esc(S[k])}" style="width:130px"></label>`).join("")+`<button class="act" id="goalSave">Save</button>`;
+  $("goalSave").onclick=async()=>{const b={};document.querySelectorAll("#goalForm input").forEach(i=>b[i.dataset.k]=i.value);
+    await fetch("/api/settings",{method:"POST",body:JSON.stringify(b)});load()};
+  const mm=P.method==="adaptive"?"from your logged intake and weight trend":P.method==="garmin"?"from Garmin's calorie burn (estimate; log your intake for a better one)":"needs Garmin data";
+  const bmi=P.wNow&&S.height_cm?P.wNow/((+S.height_cm/100)**2):null;
+  $("planCards").innerHTML=
+    card("Weight now (7-day avg)",P.wNow!=null?fmt(P.wNow)+" kg":"–",`Target ${P.tw} kg · BMI ${fmt(bmi)}`,P.wNow?P.wNow/P.tw*100:null)+
+    card("To go",P.toGo!=null?fmt(P.toGo)+" kg":"–",P.eta?`At ${P.pace} kg/week: about ${Math.round(P.weeks)} weeks (${P.eta.toISOString().slice(0,7)}). Real pace slows over time.`:"")+
+    card("Actual pace (last 4 weeks)",P.rate!=null?(P.rate>0?"+":"")+fmt(P.rate,2)+" kg/wk":"–",P.rate==null?"Needs ~2 weeks of weight data":`Goal ${P.pace} kg/wk`)+
+    card("Maintenance (est.)",P.maint!=null?fmt(P.maint,0)+" kcal":"–",mm)+
+    card("Daily calorie target",P.target!=null?fmt(P.target,0)+" kcal":"–",P.target!=null?`Maintenance + ${fmt(P.surplus,0)} surplus`:"")+
+    card("Protein",P.prot!=null?fmt(P.prot,0)+" g":"–",`${S.protein_g_per_kg} g per kg`)+
+    card("Fat / Carbs",P.fat!=null?fmt(P.fat,0)+" g / "+fmt(P.carbs,0)+" g":"–",`Fat ${S.fat_pct}% of calories, carbs the rest`);
+  const notes=[];
+  if(P.rate!=null){
+    const d=P.rate-P.pace;
+    if(P.rate>0.8&&d>0.15)notes.push(`<span class="warn">You're gaining ${fmt(P.rate,2)} kg/week, above the 0.6-0.8 range you chose.</span> The extra is most likely fat. Cutting about ${fmt(d*1100,0)} kcal/day would bring you back to pace.`);
+    else if(d>0.15)notes.push(`<span class="warn">Ahead of pace</span> (${fmt(P.rate,2)} vs ${P.pace} kg/week). Consider trimming roughly ${fmt(d*1100,0)} kcal/day if you want to limit fat.`);
+    else if(d<-0.15)notes.push(`<span class="warn">Behind pace</span> (${fmt(P.rate,2)} vs ${P.pace} kg/week). Adding about ${fmt(-d*1100,0)} kcal/day would close the gap. Easiest through shakes or oil on meals.`);
+    else notes.push(`<span class="good">On pace</span> (${fmt(P.rate,2)} kg/week).`);
+  }else notes.push("Pace check appears after about two weeks of weight data (Garmin scale or manual log).");
+  if(P.waistDelta!=null&&P.wDelta!=null)notes.push(`Last 4 weeks: weight ${P.wDelta>0?"+":""}${fmt(P.wDelta)} kg, waist ${P.waistDelta>0?"+":""}${fmt(P.waistDelta)} cm. If the waist climbs much faster than your weight does, more of the gain is fat.`);
+  else notes.push("Log your waist weekly (Body tab) so I can compare it with your weight gain.");
+  if(P.method==="garmin")notes.push("The calorie target uses Garmin's burn estimate. Once you log what you eat for ~2 weeks the hub switches to a more accurate estimate from your own intake and weight trend.");
+  notes.push("Reality check: 100 kg at 183 cm is a very large frame to build lean. Gain slows as you get bigger, so expect a multi-year road and re-check the target as your waist and body fat show up.");
+  $("planNotes").innerHTML=notes.map(n=>`<div class="insight">${n}</div>`).join("");
+  const m=+S.meals_per_day||5;
+  $("planMeals").innerHTML=P.target!=null?`<div>${m} meals/day: about <b>${fmt(P.target/m,0)} kcal</b> and <b>${fmt(P.prot/m,0)} g protein</b> each.</div>
+    <div class="sub" style="margin-top:6px">With a small appetite, make 2 of those a shake or soup (see Recepti: tags "lako za jelo" and "gusto"), add oil to cooked meals, and eat on a fixed schedule instead of waiting to feel hungry.</div>`:"<div class='sub'>Sync Garmin data first.</div>";
+}
+
+function card(title,big,sub,pct,color){
+  return `<div class="card"><h3>${title}</h3><div class="big">${big}</div><div class="sub">${sub||""}</div>${pct!=null?`<div class="bar"><i style="width:${Math.max(0,Math.min(100,pct))}%;background:${color||"var(--acc)"}"></i></div>`:""}</div>`;
+}
+
+/* ---------- overview ---------- */
+function overview(){
+  const P=planCalc(),S=D.settings,dl=D.daily;
+  const sl=avg(lastN(dl,7).map(d=>d.sleep_sec!=null?d.sleep_sec/3600:null)),stg=+S.sleep_target_h;
+  const pr=avg(lastN(dl,7).map(d=>d.protein_g));
+  const kin=avg(lastN(dl,7).map(d=>d.kcal_in)),kout=avg(lastN(dl,7).map(d=>d.kcal_total));
+  const mon=mondayOf(todayIso());
+  const wk=D.activities.filter(a=>a.date>=mon).length,wtg=+S.workouts_per_week;
+  const hrv7=avg(lastN(dl,7).map(d=>d.hrv_avg)),hrv28=avg(lastN(dl,28).map(d=>d.hrv_avg));
+  $("cards").innerHTML=
+    card("Weight (7-day avg)",P.wNow!=null?fmt(P.wNow)+" kg":"–",`Target ${P.tw} kg · ${P.toGo!=null?fmt(P.toGo)+" kg to go":""}`,P.wNow?P.wNow/P.tw*100:null)+
+    card("Calorie target",P.target!=null?fmt(P.target,0)+" kcal":"–",kin?`7-day avg eaten ${fmt(kin,0)}`:"Log calories eaten to compare",P.target&&kin?kin/P.target*100:null,kin>=P.target*0.95?"var(--good)":"var(--warn)")+
+    card("Protein (7-day avg)",pr?fmt(pr,0)+" g":"–",P.prot?`Target ${fmt(P.prot,0)} g`:"",pr&&P.prot?pr/P.prot*100:null,pr>=P.prot*0.9?"var(--good)":"var(--warn)")+
+    card("Sleep (7-day avg)",sl!=null?fmt(sl)+" h":"–",`Target ${stg} h`,sl?sl/stg*100:null,sl>=stg-0.5?"var(--good)":"var(--warn)")+
+    card("Workouts this week",wk+" / "+wtg,"Since Monday",wk/wtg*100,wk>=wtg?"var(--good)":"var(--acc)")+
+    card("HRV (7d vs 28d)",hrv7?fmt(hrv7,0)+" ms":"–",hrv28?`28-day baseline ${fmt(hrv28,0)} ms`:"",hrv7&&hrv28?hrv7/hrv28*50:null,hrv7>=hrv28*0.95?"var(--good)":"var(--warn)")+
+    (window.readinessCard?readinessCard():"");
+  const ins=[];
+  if(P.rate!=null)ins.push(`Weight trend: <b>${P.rate>0?"+":""}${fmt(P.rate,2)} kg/week</b> over the last 4 weeks (goal ${P.pace}). See the Plan tab for what to adjust.`);
+  if(sl!=null)ins.push(sl>=stg-0.5?`<span class="good">Sleep is on target</span> (${fmt(sl)} h average).`:`<span class="warn">Sleep is under target</span> (${fmt(sl)} h vs ${stg} h). Muscle repair depends heavily on it.`);
+  if(pr!=null&&P.prot)ins.push(pr>=P.prot*0.9?`<span class="good">Protein is on track</span> (${fmt(pr,0)} g).`:`<span class="warn">Protein is below target</span> (${fmt(pr,0)} g vs ${fmt(P.prot,0)} g).`);
+  if(kin&&P.target&&kin<P.target*0.9)ins.push(`<span class="warn">You're eating about ${fmt(P.target-kin,0)} kcal/day under target.</span> Shakes and soups from Recepti are the easy way to close that.`);
+  if(hrv7&&hrv28&&hrv7<hrv28*0.9)ins.push(`<span class="warn">HRV is more than 10% below your baseline.</span> Consider a lighter session or extra rest. Corticosteroids, if you take them, can also lower HRV.`);
+  $("insights").innerHTML=ins.length?ins.map(i=>`<div class="insight">${i}</div>`).join(""):"<div class='sub'>Not enough data yet.</div>";
+}
+
+/* ---------- body ---------- */
+function renderBody(){
+  const dl=D.daily,L=dl.map(d=>d.date);
+  $("lg_date").value=$("lg_date").value||todayIso();
+  const w=dl.map(d=>d.weight_kg);
+  const wv=w.filter(v=>v!=null),wmax=wv.length?Math.max(...wv):0,tw=+D.settings.target_weight,showT=wmax&&tw<=wmax*1.12;
+  $("wTarget").textContent=` · target ${tw} kg`;
+  mkChart("c_weight",{type:"line",data:{labels:L,datasets:[
+    {label:"Daily",data:w,borderColor:col("--mut"),pointRadius:1,borderWidth:1,spanGaps:true},
+    {label:"7-day avg",data:rolling(w,7),borderColor:col("--acc"),pointRadius:0,borderWidth:2.5,spanGaps:true},
+    ...(showT?[{label:"Target",data:L.map(()=>tw),borderColor:col("--good"),borderDash:[6,4],pointRadius:0,borderWidth:1.5}]:[])]},
+    options:{scales:{y:{grace:"12%"}}}});
+  const k=dl.slice(-30),P=planCalc();
+  mkChart("c_kcal",{type:"bar",data:{labels:k.map(d=>d.date.slice(5)),datasets:[
+    {label:"Eaten",data:k.map(d=>d.kcal_in),backgroundColor:col("--p")},
+    {label:"Burned",data:k.map(d=>d.kcal_total),backgroundColor:col("--warn")},
+    {type:"line",label:"Target",data:k.map(()=>P.target),borderColor:col("--good"),borderDash:[5,4],pointRadius:0}]}});
+  mkChart("c_protein",{type:"bar",data:{labels:k.map(d=>d.date.slice(5)),datasets:[
+    {label:"Protein (g)",data:k.map(d=>d.protein_g),backgroundColor:col("--good")},
+    {type:"line",label:"Target",data:k.map(()=>P.prot),borderColor:col("--bad"),borderDash:[5,4],pointRadius:0}]}});
+  const wc=dl.filter(d=>d.waist_cm!=null);
+  mkChart("c_waist",{type:"line",data:{labels:wc.map(d=>d.date),datasets:[{label:"Waist (cm)",data:wc.map(d=>d.waist_cm),borderColor:col("--warn"),pointRadius:3,spanGaps:true}]},options:{emptyText:"No waist measurements yet. Log one above."}});
+  mkChart("c_comp",{type:"line",data:{labels:L,datasets:[
+    {label:"Body fat %",data:dl.map(d=>d.body_fat),borderColor:col("--warn"),pointRadius:0,spanGaps:true,yAxisID:"y"},
+    {label:"Muscle (kg)",data:dl.map(d=>d.muscle_kg),borderColor:col("--good"),pointRadius:0,spanGaps:true,yAxisID:"y2"}]},
+    options:{emptyText:"No body composition data from your watch or scale yet.",scales:{y:{position:"left"},y2:{position:"right",grid:{drawOnChartArea:false}}}}});
+  $("lg_btn").onclick=async()=>{
+    const num=id=>$(id).value===""?null:+$(id).value;
+    await fetch("/api/log",{method:"POST",body:JSON.stringify({date:$("lg_date").value,weight_kg:num("lg_w"),waist_cm:num("lg_h"),kcal_in:num("lg_k"),protein_g:num("lg_p")})});
+    ["lg_w","lg_h","lg_k","lg_p"].forEach(i=>$(i).value="");load()};
+}
+
+/* ---------- sleep / training / recovery ---------- */
+function renderSleep(){
+  const dl=lastN(D.daily,60),L=dl.map(d=>d.date.slice(5)),h=s=>s==null?null:+(s/3600).toFixed(2);
+  mkChart("c_sleep",{type:"bar",data:{labels:L,datasets:[
+    {label:"Deep",data:dl.map(d=>h(d.deep_sec)),backgroundColor:"#3b6fd4"},
+    {label:"REM",data:dl.map(d=>h(d.rem_sec)),backgroundColor:"#a78bfa"},
+    {label:"Light",data:dl.map(d=>h(d.light_sec)),backgroundColor:"#5f7ea8"},
+    {label:"Awake",data:dl.map(d=>h(d.awake_sec)),backgroundColor:"#ef6a6a"}]},
+    options:{scales:{x:{stacked:true},y:{stacked:true}}}});
+  mkChart("c_score",{type:"line",data:{labels:L,datasets:[
+    {label:"Sleep score",data:dl.map(d=>d.sleep_score),borderColor:col("--acc"),pointRadius:1,spanGaps:true},
+    {label:"7-day avg",data:rolling(dl.map(d=>d.sleep_score),7),borderColor:col("--good"),pointRadius:0,borderWidth:2.5}]}});
+}
+function renderTraining(){
+  const wk={};
+  D.activities.forEach(a=>{const m=mondayOf(a.date);wk[m]=wk[m]||{n:0,load:0};wk[m].n++;wk[m].load+=a.load||0});
+  const keys=Object.keys(wk).sort().slice(-12);
+  mkChart("c_sessions",{type:"bar",data:{labels:keys.map(k=>k.slice(5)),datasets:[
+    {label:"Sessions",data:keys.map(k=>wk[k].n),backgroundColor:col("--acc")},
+    {type:"line",label:"Goal",data:keys.map(()=>+D.settings.workouts_per_week),borderColor:col("--good"),borderDash:[5,4],pointRadius:0}]}});
+  mkChart("c_load",{type:"bar",data:{labels:keys.map(k=>k.slice(5)),datasets:[{label:"Training load",data:keys.map(k=>Math.round(wk[k].load)),backgroundColor:col("--p")}]}});
+  const r=D.activities.slice(-25).reverse();
+  $("acts").innerHTML=`<table><tr><th>Date</th><th>Activity</th><th>Min</th><th>Avg HR</th><th>kcal</th><th>Load</th><th>Aerobic / Anaerobic TE</th></tr>`+
+    r.map(a=>`<tr class="clk" data-act="${a.id}"><td>${a.date}</td><td>${esc(a.name||a.type)}</td><td>${fmt(a.duration_min,0)}</td><td>${a.avg_hr||"–"}</td><td>${a.kcal||"–"}</td><td>${fmt(a.load,0)}</td><td>${fmt(a.aerobic_te)} / ${fmt(a.anaerobic_te)}</td></tr>`).join("")+`</table>`;
+  $("acts").onclick=e=>{const tr=e.target.closest("tr[data-act]");if(tr)openActivity(+tr.dataset.act)};
+}
+function renderRecovery(){
+  const dl=lastN(D.daily,90),L=dl.map(d=>d.date.slice(5)),hv=dl.map(d=>d.hrv_avg);
+  mkChart("c_hrv",{type:"line",data:{labels:L,datasets:[
+    {label:"HRV",data:hv,borderColor:col("--mut"),pointRadius:1,borderWidth:1,spanGaps:true},
+    {label:"28-day baseline",data:rolling(hv,28),borderColor:col("--acc"),pointRadius:0,borderWidth:2.5}]}});
+  mkChart("c_rhr",{type:"line",data:{labels:L,datasets:[{label:"Resting HR",data:dl.map(d=>d.rhr),borderColor:col("--bad"),pointRadius:0,spanGaps:true}]}});
+  mkChart("c_bb",{type:"line",data:{labels:L,datasets:[
+    {label:"High",data:dl.map(d=>d.bb_high),borderColor:col("--good"),pointRadius:0,spanGaps:true},
+    {label:"Low",data:dl.map(d=>d.bb_low),borderColor:col("--warn"),pointRadius:0,spanGaps:true}]}});
+}
+
+/* ---------- recipes ---------- */
+const REC_TAGS=["brzo","batch","gusto","lako za jelo","bez glutena","bez laktoze","niska vlaknina"];
+async function renderRecipes(){
+  if(!RC)RC=await (await fetch("/api/recipes")).json();
+  const P=planCalc(),m=+D.settings.meals_per_day||5;
+  $("recTarget").textContent=P.target!=null?`Cilj po obroku (${m} obroka/dan): oko ${fmt(P.target/m,0)} kcal i ${fmt(P.prot/m,0)} g proteina.`:"";
+  $("recInfo").innerHTML=RC.info.map(esc).join("<br>");
+  $("recChips").innerHTML=REC_TAGS.map(t=>`<button class="chip ${RECSTATE.tags.has(t)?"on":""}" data-tag="${t}">${t}</button>`).join("");
+  $("recChips").onclick=e=>{const t=e.target.dataset.tag;if(!t)return;RECSTATE.tags.has(t)?RECSTATE.tags.delete(t):RECSTATE.tags.add(t);renderRecipes()};
+  $("recSearch").value=RECSTATE.q;
+  $("recSearch").oninput=e=>{RECSTATE.q=e.target.value;drawRecipes()};
+  drawRecipes();
+}
+function drawRecipes(){
+  const q=RECSTATE.q.toLowerCase();
+  const list=RC.recepti.filter(r=>[...RECSTATE.tags].every(t=>r.tagovi.includes(t))&&(!q||(r.naziv+" "+r.sastojci.map(s=>s.naziv).join(" ")).toLowerCase().includes(q)));
+  const open=new Set([...document.querySelectorAll("details.rec[open]")].map(d=>d.dataset.id));
+  $("recList").innerHTML=list.length?list.map(r=>{
+    const sc=RECSTATE.scale[r.id]||r.porcije,f=sc/r.porcije;
+    return `<details class="rec" data-id="${r.id}" ${open.has(r.id)?"open":""}>
+      <summary><div class="rtitle">${esc(r.naziv)}
+        ${r.gluten?'<span class="pill g">gluten</span>':""} ${r.laktoza?'<span class="pill l">laktoza</span>':""}</div>
+        <div class="macros"><b>${r.kcal} kcal</b> · P <b>${r.protein} g</b> · U ${r.ugljikohidrati} g · M ${r.masti} g · vlaknine ${r.vlaknine} g (po porciji) · ${r.vrijeme} min</div>
+        <div>${r.tagovi.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div></summary>
+      <div class="sub" style="margin-top:8px">${esc(r.opis)}</div>
+      <div class="row"><label>Porcije<input type="number" min="1" step="1" value="${sc}" data-scale="${r.id}" style="width:80px"></label>
+        <button class="ghost" data-add="${r.id}">+ 1 porcija u današnji unos</button>
+        <button class="ghost" data-log="${r.id}">Zabilježi u dnevnik hrane</button></div>
+      <div class="cols">
+        <div><b>Sastojci</b><ul>${r.sastojci.map(s=>`<li>${esc(s.naziv)}: ${Math.round(s.g*f)} g${s.kom?` (${Math.round(s.kom*f*10)/10} kom)`:""}</li>`).join("")}</ul>
+          <div class="sub" style="margin-top:6px">Oprema: ${r.oprema.length?esc(r.oprema.join(", ")):"nije potrebna"} · aktivno ${r.aktivno} min</div></div>
+        <div><b>Priprema</b><ol>${r.koraci.map(k=>`<li>${esc(k)}</li>`).join("")}</ol></div>
+      </div>
+      <div class="note">${esc(r.napomena)}</div></details>`}).join(""):"<div class='sub'>Nema recepata za odabrane filtere.</div>";
+}
+document.addEventListener("input",e=>{const id=e.target.dataset&&e.target.dataset.scale;if(id){RECSTATE.scale[id]=Math.max(1,+e.target.value||1);drawRecipes()}});
+document.addEventListener("click",async e=>{
+  const add=e.target.dataset&&e.target.dataset.add,lg=e.target.dataset&&e.target.dataset.log;
+  if(add){const r=RC.recepti.find(x=>x.id===add);
+    await fetch("/api/log/add",{method:"POST",body:JSON.stringify({date:todayIso(),kcal_in:r.kcal,protein_g:r.protein})});
+    e.target.textContent="Dodano ✓";setTimeout(load,600)}
+  if(lg){const r=RC.recepti.find(x=>x.id===lg);
+    show("food");fillFood({date:todayIso(),time:new Date().toTimeString().slice(0,5),meal:"lunch",foods:r.sastojci.map(s=>s.naziv.replace(/\s*\(.*\)/,"")).join(", "),recipe:r.naziv,gluten:r.gluten,lactose:r.laktoza})}
+});
+
+/* ---------- food log ---------- */
+let editId=null;
+function fillFood(e){
+  editId=e.id||null;
+  $("f_date").value=e.date||todayIso();$("f_time").value=e.time||"";$("f_meal").value=e.meal||"lunch";
+  $("f_foods").value=e.foods||"";$("f_recipe").value=e.recipe||"";
+  $("f_gluten").checked=!!e.gluten;$("f_lactose").checked=!!e.lactose;
+  $("f_reaction").value=e.reaction==null?"":e.reaction;
+  $("f_pain").value=e.pain==null?"":e.pain;$("f_bloat").value=e.bloating==null?"":e.bloating;
+  $("f_nausea").value=e.nausea==null?"":e.nausea;$("f_toilet").value=e.toilet==null?"":e.toilet;
+  $("f_blood").checked=!!e.blood;$("f_notes").value=e.notes||"";
+  $("f_save").textContent=editId?"Update entry":"Save entry";
+}
+function renderFood(){
+  if(!$("f_date").value)fillFood({date:todayIso(),time:new Date().toTimeString().slice(0,5),meal:"lunch"});
+  const num=id=>$(id).value===""?null:+$(id).value;
+  $("f_save").onclick=async()=>{
+    if(!$("f_foods").value.trim()&&!$("f_recipe").value.trim())return;
+    await fetch("/api/food",{method:"POST",body:JSON.stringify({id:editId,date:$("f_date").value,time:$("f_time").value,meal:$("f_meal").value,foods:$("f_foods").value,recipe:$("f_recipe").value,
+      gluten:$("f_gluten").checked?1:0,lactose:$("f_lactose").checked?1:0,reaction:num("f_reaction"),pain:num("f_pain"),bloating:num("f_bloat"),nausea:num("f_nausea"),toilet:num("f_toilet"),blood:$("f_blood").checked?1:0,notes:$("f_notes").value})});
+    editId=null;fillFood({date:todayIso(),time:new Date().toTimeString().slice(0,5),meal:"lunch"});load()};
+  $("f_clear").onclick=()=>fillFood({date:todayIso(),time:new Date().toTimeString().slice(0,5),meal:"lunch"});
+  const R=["none","mild","bad"],Rc=["good","warn","bad"];
+  $("foodList").innerHTML=FOOD.length?`<table><tr><th>Date</th><th>Meal</th><th>Foods</th><th></th><th>Reaction</th><th>Pain / Bloat / Nausea / Toilet</th><th></th></tr>`+
+    FOOD.slice(0,60).map(f=>`<tr><td>${f.date}<br><span class="sub">${f.time||""}</span></td><td>${esc(f.meal)}</td><td>${esc(f.foods)}${f.recipe?`<div class="sub">${esc(f.recipe)}</div>`:""}${f.blood?'<div class="bad">blood noticed</div>':""}</td>
+      <td>${f.gluten?'<span class="pill g">G</span> ':""}${f.lactose?'<span class="pill l">L</span>':""}</td>
+      <td>${f.reaction==null?'<span class="sub">not rated</span>':`<span class="${Rc[f.reaction]}">${R[f.reaction]}</span>`}</td>
+      <td>${[f.pain,f.bloating,f.nausea,f.toilet].map(v=>v==null?"–":v).join(" / ")}</td>
+      <td><button class="ghost" data-fedit="${f.id}">Edit</button> <button class="ghost" data-fdel="${f.id}">×</button></td></tr>`).join("")+`</table>`:"<div class='sub'>No entries yet.</div>";
+  $("foodList").onclick=async e=>{
+    const ed=e.target.dataset.fedit,del=e.target.dataset.fdel;
+    if(ed){fillFood(FOOD.find(x=>x.id==ed));window.scrollTo({top:0,behavior:"smooth"})}
+    if(del&&confirm("Delete this entry?")){await fetch("/api/food/"+del,{method:"DELETE"});load()}};
+  foodAnalysis();
+}
+function foodAnalysis(){
+  const rated=FOOD.filter(f=>f.reaction!=null);
+  if(rated.length<5){$("foodAnalysis").innerHTML=`<div class="sub">${rated.length} rated entries so far. Patterns start to mean something after roughly 15 to 20 rated meals, and more for each individual food.</div>`;return}
+  const rate=a=>a.length?a.filter(f=>f.reaction>=1).length/a.length:null;
+  const grp=(label,key)=>{const y=rated.filter(f=>f[key]),n=rated.filter(f=>!f[key]);
+    return `<tr><td>${label}</td><td>${y.length}</td><td>${y.length?fmt(rate(y)*100,0)+"%":"–"}</td><td>${n.length}</td><td>${n.length?fmt(rate(n)*100,0)+"%":"–"}</td></tr>`};
+  const map={};
+  rated.forEach(f=>(f.foods||"").split(/[,;]+/).map(s=>s.trim().toLowerCase()).filter(Boolean).forEach(t=>{(map[t]=map[t]||[]).push(f)}));
+  const rows=Object.entries(map).filter(([,a])=>a.length>=2).map(([t,a])=>({t,n:a.length,r:rate(a),bad:a.filter(f=>f.reaction===2).length})).sort((x,y)=>y.r-x.r||y.n-x.n).slice(0,15);
+  $("foodAnalysis").innerHTML=`<div><b>Share of meals with a mild or bad reaction</b></div>
+    <table style="margin-top:6px"><tr><th></th><th>Meals with</th><th>Reaction rate</th><th>Meals without</th><th>Reaction rate</th></tr>${grp("Gluten","gluten")}${grp("Lactose","lactose")}</table>
+    <div style="margin-top:12px"><b>Individual foods (eaten at least twice)</b></div>
+    ${rows.length?`<table style="margin-top:6px"><tr><th>Food</th><th>Times</th><th>Mild or bad</th><th>Bad</th></tr>${rows.map(r=>`<tr><td>${esc(r.t)}</td><td>${r.n}</td><td class="${r.r>=0.5?"warn":""}">${fmt(r.r*100,0)}%</td><td>${r.bad}</td></tr>`).join("")}</table>`:"<div class='sub'>Not enough repeats yet.</div>"}
+    <div class="note">Correlation, not proof: stress, sleep, medication timing and the other foods in the meal all matter. Test one change at a time for a couple of weeks, and share the log with your gastroenterologist or a dietitian.</div>`;
+}
+
+/* ---------- medication ---------- */
+function matchInfo(name){
+  const n=(name||"").toLowerCase();
+  const alias={prednisolone:"prednisone",medrol:"prednisone",entocort:"budesonide",imuran:"azathioprine",mesalamine:"mesalazine",pentasa:"mesalazine",asacol:"mesalazine",humira:"adalimumab",infliximab:"adalimumab",remicade:"adalimumab",vedolizumab:"adalimumab",entyvio:"adalimumab",ustekinumab:"adalimumab",stelara:"adalimumab","vitamin b12":"b12",cobalamin:"b12"};
+  for(const k of Object.keys(MI))if(n.includes(k))return MI[k];
+  for(const k of Object.keys(alias))if(n.includes(k))return MI[alias[k]];
+  return null;
+}
+function renderMeds(){
+  $("medlist").innerHTML=D.meds.length?`<table><tr><th>Name</th><th>Dose</th><th>Schedule</th><th>Started</th><th>Notes</th><th></th></tr>`+
+    D.meds.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.dose)}</td><td>${esc(m.schedule)}</td><td>${m.started||""}</td><td>${esc(m.notes)}</td><td><button class="ghost" data-del="${m.id}">Remove</button></td></tr>`).join("")+`</table>`:"<div class='sub'>No medication added yet.</div>";
+  $("medinfo").innerHTML=D.meds.length?D.meds.map(m=>{const i=matchInfo(m.name);
+    return `<div class="insight"><b>${esc(m.name)}</b>${i?` <span class="sub">(${i.label})</span><div><b>Training and body:</b><ul>${i.training.map(x=>`<li>${x}</li>`).join("")}</ul></div><div><b>Sleep and recovery:</b><ul>${i.sleep_recovery.map(x=>`<li>${x}</li>`).join("")}</ul></div><div class="sub">${i.watch}</div>`:`<div class="sub">No built-in notes for this one. Ask Claude about it.</div>`}</div>`}).join(""):"<div class='sub'>Add your medication above to see notes here.</div>";
+  $("m_add").onclick=async()=>{if(!$("m_name").value.trim())return;
+    await fetch("/api/meds",{method:"POST",body:JSON.stringify({name:$("m_name").value,dose:$("m_dose").value,schedule:$("m_sched").value,started:$("m_start").value,notes:$("m_notes").value})});
+    ["m_name","m_dose","m_sched","m_start","m_notes"].forEach(i=>$(i).value="");load()};
+  $("medlist").onclick=async e=>{const id=e.target.dataset.del;if(!id)return;await fetch("/api/meds/"+id,{method:"DELETE"});load()};
+}
+
+$("syncBtn").onclick=async()=>{
+  $("syncBtn").disabled=true;$("status").textContent="Syncing… check the terminal if it asks for a login or MFA code";
+  const r=await (await fetch("/api/sync?days=7",{method:"POST"})).json();
+  $("status").textContent=r.ok?"Sync complete":"Sync failed: "+r.output.slice(-200);
+  $("syncBtn").disabled=false;load();
+};
+tabs();show((location.hash||"#overview").slice(1)||"overview");load();
+</script>
+</body>
+</html>

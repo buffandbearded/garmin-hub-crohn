@@ -1,0 +1,1236 @@
+{
+ "info": [
+  "Vrijednosti su približne, izračunate iz sirovih težina i prosječnih nutritivnih tablica. Po porciji.",
+  "Recepti nisu prilagođeni vašoj toleranciji: oznake za gluten, laktozu i vlaknine služe da lakše testirate što vam odgovara.",
+  "Meso uvijek dobro ispecite. Gotova jela čuvajte u hladnjaku najviše 3 dana i grijte dok ne postanu vruća."
+ ],
+ "recepti": [
+  {
+   "id": "piletina-riza-povrce",
+   "naziv": "Piletina s rižom i povrćem (u kuhalu za rižu)",
+   "opis": "Cijeli obrok u jednoj posudi. Idealno za batch: skuhate jednom, jedete 3 dana.",
+   "porcije": 4,
+   "vrijeme": 40,
+   "aktivno": 15,
+   "oprema": [
+    "štednjak (tava)",
+    "Xiaomi kuhalo za rižu"
+   ],
+   "sastojci": [
+    {
+     "naziv": "riža (sirova)",
+     "g": 400,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "pileći zabatak bez kože i kosti (sirov)",
+     "g": 800,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 50,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "luk",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "mrkva",
+     "g": 240,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "grašak (smrznuti)",
+     "g": 160,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Zabatak narežite na kockice od oko 2 cm, posolite, popaprite i dodajte malo slatke mljevene paprike ili kurkume.",
+    "Luk sitno nasjeckajte, a mrkvu naribajte ili narežite na tanke kolutiće.",
+    "U tavi zagrijte ulje i 5 minuta pecite meso dok ne dobije boju, zatim dodajte luk i mrkvu i pirjajte još 3 minute.",
+    "Rižu dobro isperite pod hladnom vodom i stavite u posudu kuhala. Dodajte sadržaj tave, grašak i 600 ml vode (oko 1,5 ml vode na 1 g riže).",
+    "Posolite, promiješajte i pokrenite standardni program kuhanja riže. Kad završi, ostavite poklopljeno još 10 minuta.",
+    "Provjerite da u piletini nema ružičastih dijelova. Podijelite na 4 posude; u hladnjaku do 3 dana, grijte dok ne postane vruće."
+   ],
+   "napomena": "Bez glutena i bez laktoze. Mrkva i grašak su blagi na okus; ako grašak ne prija, zamijenite ga s još mrkve.",
+   "kcal": 780,
+   "protein": 49,
+   "ugljikohidrati": 93,
+   "masti": 22,
+   "vlaknine": 5.5,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "batch",
+    "meal prep",
+    "bez glutena",
+    "bez laktoze",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "omlet-sunka-sir",
+   "naziv": "Omlet s 4 jaja, šunkom i sirom",
+   "opis": "Brzi, proteinski bogat doručak ili večera.",
+   "porcije": 1,
+   "vrijeme": 12,
+   "aktivno": 12,
+   "oprema": [
+    "štednjak (tava)"
+   ],
+   "sastojci": [
+    {
+     "naziv": "jaja",
+     "g": 200,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 4.0
+    },
+    {
+     "naziv": "pureća šunka",
+     "g": 60,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "sir (edamer / gauda)",
+     "g": 40,
+     "gluten": 0,
+     "laktoza": 1
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 10,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bijeli kruh / zemička",
+     "g": 80,
+     "gluten": 1,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Jaja razbijte u zdjelu, posolite, popaprite i lagano umutite vilicom.",
+    "Šunku narežite na trakice, sir naribajte.",
+    "U tavi zagrijte ulje na srednjoj vatri i ulijte jaja.",
+    "Kad se rubovi stegnu (oko 2 min), na jednu polovicu stavite šunku i sir.",
+    "Preklopite omlet i pecite još 1 do 2 minute. Poslužite s kruhom."
+   ],
+   "napomena": "Bez glutena: izostavite kruh (ili jedite kuhani krumpir). Bez laktoze: izostavite sir. Izračun je s kruhom i sirom.",
+   "kcal": 795,
+   "protein": 53,
+   "ugljikohidrati": 42,
+   "masti": 45,
+   "vlaknine": 2.2,
+   "gluten": 1,
+   "laktoza": 1,
+   "tagovi": [
+    "brzo",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "kajgana-riza-sunka",
+   "naziv": "Kajgana s rižom i šunkom",
+   "opis": "Dobar način za iskoristiti rižu iz batcha.",
+   "porcije": 1,
+   "vrijeme": 20,
+   "aktivno": 10,
+   "oprema": [
+    "štednjak (tava)",
+    "Xiaomi kuhalo za rižu"
+   ],
+   "sastojci": [
+    {
+     "naziv": "riža (sirova)",
+     "g": 90,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "jaja",
+     "g": 150,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 3.0
+    },
+    {
+     "naziv": "pureća šunka",
+     "g": 50,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "grašak (smrznuti)",
+     "g": 40,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 10,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Rižu (90 g sirove) skuhajte u kuhalu s 135 ml vode. Ako već imate gotovu rižu, upotrijebite oko 270 g kuhane.",
+    "Šunku narežite na kockice. Jaja umutite sa solju i paprom.",
+    "U tavi zagrijte ulje, dodajte šunku i grašak i pržite 2 minute.",
+    "Dodajte rižu i zagrijavajte 2 minute, zatim sve gurnite na stranu i u slobodni dio ulijte jaja.",
+    "Miješajte jaja dok se ne stegnu, pa sve povežite i poslužite."
+   ],
+   "napomena": "Bez glutena i bez laktoze.",
+   "kcal": 713,
+   "protein": 36,
+   "ugljikohidrati": 78,
+   "masti": 27,
+   "vlaknine": 3.2,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "brzo",
+    "bez glutena",
+    "bez laktoze",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "krumpir-jaja-friteza",
+   "naziv": "Krumpir iz zračne friteze s jajima i šunkom",
+   "opis": "Hrskavi krumpir i kajgana. Brzo i jeftino.",
+   "porcije": 1,
+   "vrijeme": 30,
+   "aktivno": 12,
+   "oprema": [
+    "zračna friteza",
+    "štednjak (tava)"
+   ],
+   "sastojci": [
+    {
+     "naziv": "krumpir",
+     "g": 400,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "jaja",
+     "g": 150,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 3.0
+    },
+    {
+     "naziv": "pureća šunka",
+     "g": 40,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "luk",
+     "g": 40,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "crvena paprika",
+     "g": 50,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 15,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Krumpir ogulite i narežite na kockice od oko 2 cm. Promiješajte s 10 g ulja i solju.",
+    "Stavite u zračnu fritezu na 200 °C i pecite 18 do 20 minuta, protresite košaru na pola vremena.",
+    "U tavi na preostalih 5 g ulja pirjajte sitno narezan luk i papriku 4 minute, dodajte šunku.",
+    "Dodajte umućena jaja i miješajte 2 minute dok se ne stegnu.",
+    "Pomiješajte s krumpirom i poslužite odmah."
+   ],
+   "napomena": "Bez glutena i bez laktoze.",
+   "kcal": 731,
+   "protein": 35,
+   "ugljikohidrati": 76,
+   "masti": 31,
+   "vlaknine": 10.5,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "bez glutena",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "zabatak-krumpir-friteza",
+   "naziv": "Pileći zabatak i krumpir iz zračne friteze",
+   "opis": "Gotovo bez rada: sve ide u friteza.",
+   "porcije": 2,
+   "vrijeme": 35,
+   "aktivno": 10,
+   "oprema": [
+    "zračna friteza"
+   ],
+   "sastojci": [
+    {
+     "naziv": "pileći zabatak bez kože i kosti (sirov)",
+     "g": 500,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "krumpir",
+     "g": 800,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 30,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Meso začinite solju, paprom, slatkom paprikom, češnjakom u prahu i 15 g ulja.",
+    "Krumpir ogulite, narežite na krupnije kockice i promiješajte s 15 g ulja i solju.",
+    "Zračnu fritezu zagrijte na 200 °C. Najprije pecite krumpir 10 minuta.",
+    "Dodajte meso i pecite još 15 do 18 minuta, protresite na pola vremena. Ako je košara mala, pecite u dvije serije.",
+    "Meso mora biti potpuno pečeno (bistar sok, bez ružičaste boje; unutarnja temperatura 75 °C)."
+   ],
+   "napomena": "Bez glutena i bez laktoze.",
+   "kcal": 743,
+   "protein": 57,
+   "ugljikohidrati": 68,
+   "masti": 26,
+   "vlaknine": 8.8,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "bez glutena",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "okruglice-pire",
+   "naziv": "Mesne okruglice u umaku od rajčice s pireom",
+   "opis": "Klasik za batch. Pire s bezlaktoznim mlijekom.",
+   "porcije": 4,
+   "vrijeme": 60,
+   "aktivno": 30,
+   "oprema": [
+    "štednjak"
+   ],
+   "sastojci": [
+    {
+     "naziv": "mljevena junetina, 10 % masti (sirova)",
+     "g": 600,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "krušne mrvice",
+     "g": 60,
+     "gluten": 1,
+     "laktoza": 0
+    },
+    {
+     "naziv": "jaja",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 2.0
+    },
+    {
+     "naziv": "luk",
+     "g": 80,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "pasirana rajčica",
+     "g": 500,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 80,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "krumpir",
+     "g": 1000,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bezlaktozno mlijeko",
+     "g": 200,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Krumpir ogulite, narežite i kuhajte u slanoj vodi oko 20 minuta dok ne omekša.",
+    "U zdjeli pomiješajte mljeveno meso, mrvice, jaja, sitno nasjeckan luk, sol i papar. Oblikujte kuglice veličine oraha (oko 24 komada).",
+    "U velikoj tavi zagrijte 40 g ulja i pecite okruglice 6 do 8 minuta uz okretanje.",
+    "Dodajte pasiranu rajčicu, malo soli i 100 ml vode, poklopite i kuhajte na tihoj vatri 15 minuta.",
+    "Krumpir ocijedite i zgnječite, dodajte toplo bezlaktozno mlijeko i preostalih 40 g ulja pa miješajte do glatkog pirea.",
+    "Podijelite na 4 porcije. Okruglice moraju biti potpuno pečene iznutra. U hladnjaku do 3 dana."
+   ],
+   "napomena": "Mrvice sadrže gluten. Možete ih zamijeniti kuhanom rižom (oko 100 g), tada je jelo bez glutena.",
+   "kcal": 803,
+   "protein": 44,
+   "ugljikohidrati": 65,
+   "masti": 40,
+   "vlaknine": 8.3,
+   "gluten": 1,
+   "laktoza": 0,
+   "tagovi": [
+    "batch",
+    "meal prep",
+    "lako za jelo",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "tjestenina-puretina",
+   "naziv": "Tjestenina s mljevenom puretinom i umakom od rajčice",
+   "opis": "Jednostavan batch obrok.",
+   "porcije": 4,
+   "vrijeme": 35,
+   "aktivno": 20,
+   "oprema": [
+    "štednjak"
+   ],
+   "sastojci": [
+    {
+     "naziv": "tjestenina (sirova)",
+     "g": 400,
+     "gluten": 1,
+     "laktoza": 0
+    },
+    {
+     "naziv": "mljevena puretina (sirova)",
+     "g": 600,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "pasirana rajčica",
+     "g": 500,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "luk",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 40,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Luk sitno nasjeckajte i pirjajte na ulju 4 minute.",
+    "Dodajte puretinu i pecite 8 minuta uz mrvljenje dok ne izgubi ružičastu boju.",
+    "Dodajte pasiranu rajčicu, sol, papar i origano te kuhajte 15 minuta na tihoj vatri.",
+    "Tjesteninu skuhajte u slanoj vodi prema uputi na pakiranju i ocijedite.",
+    "Pomiješajte s umakom i podijelite na 4 porcije. U hladnjaku do 3 dana."
+   ],
+   "napomena": "Sadrži gluten (tjestenina). Bez laktoze.",
+   "kcal": 725,
+   "protein": 43,
+   "ugljikohidrati": 82,
+   "masti": 24,
+   "vlaknine": 5.4,
+   "gluten": 1,
+   "laktoza": 0,
+   "tagovi": [
+    "batch",
+    "meal prep",
+    "bez laktoze",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "bowl-junetina-riza-jaja",
+   "naziv": "Bowl s mljevenom junetinom, rižom i jajima",
+   "opis": "Brz, sitan i sit obrok.",
+   "porcije": 1,
+   "vrijeme": 25,
+   "aktivno": 12,
+   "oprema": [
+    "štednjak (tava)",
+    "Xiaomi kuhalo za rižu"
+   ],
+   "sastojci": [
+    {
+     "naziv": "mljevena junetina, 10 % masti (sirova)",
+     "g": 150,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "riža (sirova)",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "jaja",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 2.0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 10,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "crvena paprika",
+     "g": 50,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Rižu (100 g) skuhajte u kuhalu s 150 ml vode.",
+    "Papriku narežite na kockice. U tavi zagrijte pola ulja i pecite mljeveno meso 8 minuta uz mrvljenje, začinite solju i paprom.",
+    "Dodajte papriku i pecite još 2 minute. Meso izvadite na tanjur.",
+    "U istoj tavi na preostalom ulju ispecite dva jaja (oko 3 minute).",
+    "Složite u zdjelu: riža, meso s paprikom i jaja na vrhu."
+   ],
+   "napomena": "Bez glutena i bez laktoze.",
+   "kcal": 871,
+   "protein": 50,
+   "ugljikohidrati": 83,
+   "masti": 35,
+   "vlaknine": 2.4,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "brzo",
+    "bez glutena",
+    "bez laktoze",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "purecna-prsa-friteza",
+   "naziv": "Pureća prsa iz zračne friteze s rižom i mrkvom",
+   "opis": "Čist, proteinski bogat obrok.",
+   "porcije": 1,
+   "vrijeme": 25,
+   "aktivno": 10,
+   "oprema": [
+    "zračna friteza",
+    "Xiaomi kuhalo za rižu"
+   ],
+   "sastojci": [
+    {
+     "naziv": "pureća prsa (sirova)",
+     "g": 200,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "riža (sirova)",
+     "g": 110,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "mrkva",
+     "g": 80,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 20,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Rižu (110 g) skuhajte u kuhalu s 165 ml vode i prstohvatom soli.",
+    "Prsa narežite na dvije debele šnicle (oko 2 cm), premažite s 10 g ulja, posolite i popaprite.",
+    "Mrkvu narežite na štapiće i promiješajte s malo soli.",
+    "Zračna friteza 200 °C: šnicle i mrkva zajedno 12 do 14 minuta, okrenite na pola vremena. Unutarnja temperatura mesa mora biti 74 °C.",
+    "Rižu prelijte preostalih 10 g ulja i poslužite uz meso i mrkvu."
+   ],
+   "napomena": "Bez glutena i bez laktoze.",
+   "kcal": 834,
+   "protein": 56,
+   "ugljikohidrati": 95,
+   "masti": 24,
+   "vlaknine": 3.7,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "brzo",
+    "bez glutena",
+    "bez laktoze",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "krem-juha-krumpir-piletina",
+   "naziv": "Krem juha od krumpira i piletine",
+   "opis": "Tekuća i lagana za jelo, dobra kad nemate apetita. Kalorije u tekućem obliku.",
+   "porcije": 3,
+   "vrijeme": 40,
+   "aktivno": 15,
+   "oprema": [
+    "štednjak",
+    "blender / štapni mikser"
+   ],
+   "sastojci": [
+    {
+     "naziv": "krumpir",
+     "g": 700,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "pileća prsa (sirova)",
+     "g": 450,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "mrkva",
+     "g": 200,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "luk",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 45,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "riža (sirova)",
+     "g": 90,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Luk i mrkvu narežite i pirjajte na ulju 4 minute.",
+    "Dodajte oguljen narezan krumpir, ispranu rižu, piletinu u komadima, sol i 1,2 l vode.",
+    "Kuhajte na tihoj vatri 25 minuta do mekoće.",
+    "Izvadite piletinu, usitnite je vilicom ili nožem i ostavite sa strane.",
+    "Ostatak izmiksajte do glatkoće u blenderu (u manjim obrocima, ostavite otvor za paru jer je vruće).",
+    "Vratite piletinu u juhu, zagrijte i podijelite na 3 porcije (oko 500 ml). U hladnjaku do 3 dana."
+   ],
+   "napomena": "Bez glutena i bez laktoze. Za više kalorija dodajte žlicu ulja po porciji.",
+   "kcal": 641,
+   "protein": 42,
+   "ugljikohidrati": 73,
+   "masti": 20,
+   "vlaknine": 8.0,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "batch",
+    "lako za jelo",
+    "gusto",
+    "bez glutena",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "shake-kikiriki",
+   "naziv": "Kalorijski shake: banana, kikiriki maslac, mlijeko, med",
+   "opis": "Lako za popiti kad ne možete jesti. Oko 750 kcal.",
+   "porcije": 1,
+   "vrijeme": 5,
+   "aktivno": 5,
+   "oprema": [
+    "blender"
+   ],
+   "sastojci": [
+    {
+     "naziv": "banana",
+     "g": 150,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 1.2
+    },
+    {
+     "naziv": "maslac od kikirikija",
+     "g": 50,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bezlaktozno mlijeko",
+     "g": 450,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "med",
+     "g": 25,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Sve sastojke stavite u blender.",
+    "Miksajte 30 do 40 sekundi dok ne bude glatko.",
+    "Pijte polako, kroz 10 do 15 minuta."
+   ],
+   "napomena": "Bez glutena i bez laktoze. Za više proteina možete dodati protein u prahu (provjerite sadrži li laktozu).",
+   "kcal": 748,
+   "protein": 30,
+   "ugljikohidrati": 87,
+   "masti": 38,
+   "vlaknine": 6.9,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "brzo",
+    "lako za jelo",
+    "gusto",
+    "bez glutena",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "shake-zob-jogurt",
+   "naziv": "Shake sa zobi, jogurtom i bananom",
+   "opis": "Gust shake, otprilike 850 kcal.",
+   "porcije": 1,
+   "vrijeme": 8,
+   "aktivno": 8,
+   "oprema": [
+    "blender"
+   ],
+   "sastojci": [
+    {
+     "naziv": "zobene pahuljice",
+     "g": 60,
+     "gluten": 1,
+     "laktoza": 0
+    },
+    {
+     "naziv": "banana",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 1.0
+    },
+    {
+     "naziv": "grčki jogurt",
+     "g": 150,
+     "gluten": 0,
+     "laktoza": 1
+    },
+    {
+     "naziv": "maslac od kikirikija",
+     "g": 25,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bezlaktozno mlijeko",
+     "g": 300,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "med",
+     "g": 15,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Zobene pahuljice 5 minuta namočite u mlijeku.",
+    "Sve prebacite u blender i dodajte ostale sastojke.",
+    "Miksajte 40 sekundi dok ne bude glatko."
+   ],
+   "napomena": "Sadrži laktozu (jogurt) i potencijalno gluten (zob). Dobar za testiranje reakcija jedno po jedno.",
+   "kcal": 855,
+   "protein": 39,
+   "ugljikohidrati": 105,
+   "masti": 34,
+   "vlaknine": 10.6,
+   "gluten": 1,
+   "laktoza": 1,
+   "tagovi": [
+    "brzo",
+    "lako za jelo",
+    "gusto"
+   ]
+  },
+  {
+   "id": "zobena-kasa-mikrovalna",
+   "naziv": "Zobena kaša s bananom i kikiriki maslacem (mikrovalna)",
+   "opis": "Gotova za 5 minuta, meka i lagana za jelo.",
+   "porcije": 1,
+   "vrijeme": 6,
+   "aktivno": 5,
+   "oprema": [
+    "mikrovalna"
+   ],
+   "sastojci": [
+    {
+     "naziv": "zobene pahuljice",
+     "g": 80,
+     "gluten": 1,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bezlaktozno mlijeko",
+     "g": 300,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "banana",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 1.0
+    },
+    {
+     "naziv": "maslac od kikirikija",
+     "g": 25,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "med",
+     "g": 15,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Zob i mlijeko stavite u veliku posudu za mikrovalnu (kaša se digne).",
+    "Grijte 2,5 do 3 minute na 800 W, promiješajte nakon 1,5 minute.",
+    "Dodajte narezanu bananu, kikiriki maslac i med pa promiješajte."
+   ],
+   "napomena": "Zob može sadržavati tragove glutena. Bez laktoze.",
+   "kcal": 766,
+   "protein": 28,
+   "ugljikohidrati": 112,
+   "masti": 27,
+   "vlaknine": 12.6,
+   "gluten": 1,
+   "laktoza": 0,
+   "tagovi": [
+    "brzo",
+    "lako za jelo",
+    "gusto",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "palacinke-zob-banana",
+   "naziv": "Palačinke od zobi i banane",
+   "opis": "Tijesto iz blendera, bez brašna.",
+   "porcije": 1,
+   "vrijeme": 15,
+   "aktivno": 15,
+   "oprema": [
+    "blender",
+    "štednjak (tava)"
+   ],
+   "sastojci": [
+    {
+     "naziv": "zobene pahuljice",
+     "g": 80,
+     "gluten": 1,
+     "laktoza": 0
+    },
+    {
+     "naziv": "banana",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 1.0
+    },
+    {
+     "naziv": "jaja",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 2.0
+    },
+    {
+     "naziv": "bezlaktozno mlijeko",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 10,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "med",
+     "g": 20,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Zob, bananu, jaja i mlijeko izmiksajte u blenderu do glatkog tijesta.",
+    "Tavu lagano premažite uljem i zagrijte na srednjoj vatri.",
+    "Ulijte po 3 do 4 žlice tijesta, pecite 2 minute sa svake strane.",
+    "Poslužite s medom."
+   ],
+   "napomena": "Zob može sadržavati tragove glutena. Bez laktoze.",
+   "kcal": 757,
+   "protein": 28,
+   "ugljikohidrati": 102,
+   "masti": 28,
+   "vlaknine": 11.1,
+   "gluten": 1,
+   "laktoza": 0,
+   "tagovi": [
+    "brzo",
+    "lako za jelo",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "riza-s-mlijekom",
+   "naziv": "Riža s mlijekom i bananom",
+   "opis": "Slatki međuobrok, vrlo lagan za želudac.",
+   "porcije": 1,
+   "vrijeme": 25,
+   "aktivno": 5,
+   "oprema": [
+    "štednjak"
+   ],
+   "sastojci": [
+    {
+     "naziv": "riža (sirova)",
+     "g": 60,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bezlaktozno mlijeko",
+     "g": 400,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "banana",
+     "g": 100,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 0.8
+    },
+    {
+     "naziv": "med",
+     "g": 20,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Rižu isperite i stavite u lonac s mlijekom i prstohvatom soli.",
+    "Zakuhajte pa smanjite na tihu vatru i kuhajte 18 do 20 minuta uz često miješanje (mlijeko lako zagori).",
+    "Maknite s vatre, dodajte med i narezanu bananu."
+   ],
+   "napomena": "Bez glutena i bez laktoze (bezlaktozno mlijeko).",
+   "kcal": 582,
+   "protein": 19,
+   "ugljikohidrati": 106,
+   "masti": 12,
+   "vlaknine": 3.4,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "lako za jelo",
+    "gusto",
+    "brzo",
+    "bez glutena",
+    "bez laktoze",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "tortilja-piletina-sir",
+   "naziv": "Tortilja s piletinom, paprikom i sirom",
+   "opis": "Brzi wrap, dobar i hladan za van.",
+   "porcije": 1,
+   "vrijeme": 20,
+   "aktivno": 15,
+   "oprema": [
+    "štednjak (tava)",
+    "zračna friteza (po želji)"
+   ],
+   "sastojci": [
+    {
+     "naziv": "pšenična tortilja",
+     "g": 130,
+     "gluten": 1,
+     "laktoza": 0,
+     "kom": 2.0
+    },
+    {
+     "naziv": "pileća prsa (sirova)",
+     "g": 180,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "sir (edamer / gauda)",
+     "g": 40,
+     "gluten": 0,
+     "laktoza": 1
+    },
+    {
+     "naziv": "crvena paprika",
+     "g": 50,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 10,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Prsa narežite na trakice, posolite i popaprite.",
+    "Pecite na ulju 6 do 8 minuta dok nisu potpuno pečena. Papriku narežite na trakice.",
+    "Na tortilje poslažite meso, papriku i naribani sir, zamotajte.",
+    "Zagrijte u tavi ili u zračnoj fritezi 3 minute na 180 °C da sir omekša."
+   ],
+   "napomena": "Sadrži gluten (tortilja) i laktozu (sir).",
+   "kcal": 865,
+   "protein": 62,
+   "ugljikohidrati": 71,
+   "masti": 35,
+   "vlaknine": 5.0,
+   "gluten": 1,
+   "laktoza": 1,
+   "tagovi": [
+    "brzo",
+    "niska vlaknina"
+   ]
+  },
+  {
+   "id": "jogurt-med-banana-zob",
+   "naziv": "Grčki jogurt s medom, bananom i zobi",
+   "opis": "Međuobrok bez kuhanja.",
+   "porcije": 1,
+   "vrijeme": 5,
+   "aktivno": 5,
+   "oprema": [],
+   "sastojci": [
+    {
+     "naziv": "grčki jogurt",
+     "g": 250,
+     "gluten": 0,
+     "laktoza": 1
+    },
+    {
+     "naziv": "med",
+     "g": 25,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "banana",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0,
+     "kom": 1.0
+    },
+    {
+     "naziv": "zobene pahuljice",
+     "g": 40,
+     "gluten": 1,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Jogurt stavite u zdjelu.",
+    "Dodajte narezanu bananu, zobene pahuljice i med.",
+    "Promiješajte i jedite odmah ili ostavite 10 minuta da zob omekša."
+   ],
+   "napomena": "Sadrži laktozu i potencijalno gluten (zob). Upotrijebite za test svakog sastojka zasebno.",
+   "kcal": 610,
+   "protein": 29,
+   "ugljikohidrati": 84,
+   "masti": 18,
+   "vlaknine": 7.1,
+   "gluten": 1,
+   "laktoza": 1,
+   "tagovi": [
+    "brzo",
+    "lako za jelo"
+   ]
+  },
+  {
+   "id": "zapecenji-krumpir-meso",
+   "naziv": "Zapečeni krumpir s mljevenim mesom",
+   "opis": "Jedno-posudni obrok iz pećnice.",
+   "porcije": 4,
+   "vrijeme": 70,
+   "aktivno": 25,
+   "oprema": [
+    "štednjak",
+    "pećnica"
+   ],
+   "sastojci": [
+    {
+     "naziv": "krumpir",
+     "g": 1200,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "mljevena junetina, 10 % masti (sirova)",
+     "g": 600,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "luk",
+     "g": 120,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "pasirana rajčica",
+     "g": 300,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 60,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Pećnicu zagrijte na 200 °C.",
+    "Krumpir ogulite, narežite na ploške debljine oko 5 mm i prokuhajte 5 minuta u slanoj vodi, pa ocijedite.",
+    "U tavi na 20 g ulja pirjajte sitno nasjeckan luk 4 minute, dodajte meso i pecite 8 minuta.",
+    "Dodajte pasiranu rajčicu, sol i papar i kuhajte 10 minuta.",
+    "U vatrostalnu posudu složite pola krumpira, preko njega meso, pa ostatak krumpira. Prelijte s 40 g ulja i posolite.",
+    "Pecite 30 minuta dok ne dobije zlatnu koricu. Podijelite na 4 porcije; u hladnjaku do 3 dana."
+   ],
+   "napomena": "Bez glutena i bez laktoze.",
+   "kcal": 664,
+   "protein": 38,
+   "ugljikohidrati": 58,
+   "masti": 30,
+   "vlaknine": 8.2,
+   "gluten": 0,
+   "laktoza": 0,
+   "tagovi": [
+    "batch",
+    "meal prep",
+    "bez glutena",
+    "bez laktoze"
+   ]
+  },
+  {
+   "id": "burger-friteza",
+   "naziv": "Burger iz zračne friteze s krumpirićima",
+   "opis": "Domaća pljeskavica i krumpirići bez prženja u dubokom ulju.",
+   "porcije": 1,
+   "vrijeme": 30,
+   "aktivno": 12,
+   "oprema": [
+    "zračna friteza"
+   ],
+   "sastojci": [
+    {
+     "naziv": "mljevena junetina, 10 % masti (sirova)",
+     "g": 180,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "bijeli kruh / zemička",
+     "g": 80,
+     "gluten": 1,
+     "laktoza": 0
+    },
+    {
+     "naziv": "sir (edamer / gauda)",
+     "g": 25,
+     "gluten": 0,
+     "laktoza": 1
+    },
+    {
+     "naziv": "krumpir",
+     "g": 250,
+     "gluten": 0,
+     "laktoza": 0
+    },
+    {
+     "naziv": "maslinovo ulje",
+     "g": 10,
+     "gluten": 0,
+     "laktoza": 0
+    }
+   ],
+   "koraci": [
+    "Meso posolite, popaprite i oblikujte pljeskavicu debljine oko 2 cm.",
+    "Krumpir narežite na štapiće, promiješajte s uljem i solju. Zračna friteza 200 °C, 18 do 20 minuta, protresite na pola vremena.",
+    "Pljeskavicu pecite u fritezi 10 do 12 minuta na 180 °C, okrenite na pola, a sir dodajte zadnju minutu.",
+    "Zemičku zagrijte 2 minute, složite burger i poslužite s krumpirićima."
+   ],
+   "napomena": "Sadrži gluten (zemička) i laktozu (sir). Pljeskavica mora biti potpuno pečena.",
+   "kcal": 899,
+   "protein": 54,
+   "ugljikohidrati": 82,
+   "masti": 38,
+   "vlaknine": 7.7,
+   "gluten": 1,
+   "laktoza": 1,
+   "tagovi": []
+  }
+ ]
+}

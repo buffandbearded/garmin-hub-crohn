@@ -1,0 +1,11 @@
+# personal data: never commit these
+hub.db
+hub.db-*
+lab_uploads/
+activity_cache/
+_backup_*/
+
+# python
+.venv/
+__pycache__/
+*.pyc
