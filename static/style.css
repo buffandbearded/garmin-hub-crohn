@@ -236,3 +236,54 @@ button.small{padding:5px 10px;font-size:12.5px}
 .leaflet-container{font-family:inherit}
 .leaflet-control-layers{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px}
 .leaflet-control-layers-expanded{padding:6px 10px}
+
+/* ---------- phone layout ---------- */
+html{-webkit-text-size-adjust:100%}
+@media (max-width:640px){
+  /* compact header, tabs become one swipeable row that stays at the top */
+  header{position:static;flex-wrap:nowrap;padding:10px 14px;gap:8px}
+  header .row{flex-wrap:nowrap;gap:8px;margin:0;min-width:0}
+  #status{font-size:11px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #syncBtn{white-space:nowrap;padding:6px 10px;font-size:13px}
+  nav{position:sticky;top:0;z-index:19;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding:8px 12px;
+    background:rgba(15,17,21,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.06);scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav button{flex:0 0 auto;white-space:nowrap;padding:6px 12px;font-size:13.5px}
+
+  main{padding:12px 12px 40px}
+  .grid{gap:10px}
+  .card{padding:13px 14px}
+  .half,.wide{grid-column:1/-1}
+  #cards,#planCards{grid-template-columns:1fr 1fr}
+  #cards .card:last-child,#planCards .card:last-child{grid-column:1/-1}
+  .big{font-size:23px}
+  .big .u{font-size:12px}
+  .card h3{font-size:10.5px}
+  .chart{height:230px}
+  .chart.sm{height:140px}
+
+  /* tables scroll inside their card instead of widening the page */
+  table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13px}
+  th,td{padding:8px 7px}
+  #acts th:nth-child(n+6),#acts td:nth-child(n+6){display:none}
+  #acts td:first-child,#acts th:first-child{white-space:nowrap}
+
+  /* forms: no iOS zoom on focus, selects never wider than the card */
+  input,select,textarea{font-size:16px}
+  select{max-width:100%;width:100%}
+  input[type=checkbox]{font-size:inherit}
+
+  /* activity panel becomes a full-screen sheet */
+  .amodal{padding:0}
+  .apanel{border-radius:0;border-width:0;min-height:100vh;padding:14px 12px 28px}
+  .aclose{top:10px;right:10px}
+  .at{font-size:19px}
+  .astats{grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}
+  .astat{padding:8px 9px;border-radius:10px}
+  .astat .al{font-size:9.5px;letter-spacing:.04em}
+  .astat .av{font-size:16px}
+  .astat .u{font-size:10.5px;margin-left:2px}
+  input[type=file]{width:100%;max-width:100%;min-width:0}
+  label{max-width:100%;min-width:0}
+}

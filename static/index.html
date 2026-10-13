@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="/static/style.css?v=5">
+<link rel="stylesheet" href="/static/style.css?v=6">
 </head>
 <body>
 <header>
@@ -199,6 +199,7 @@ function show(t){
   document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===t));
   document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
   location.hash=t;
+  const ab=document.querySelector("nav button.on");if(ab&&innerWidth<=640)$("tabs").scrollTo({left:Math.max(0,ab.offsetLeft-70),behavior:"smooth"});
   if(D)render();
 }
 function render(){
