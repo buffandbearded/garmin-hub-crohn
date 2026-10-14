@@ -47,7 +47,42 @@ def extra():
         labs=rows("SELECT * FROM labs ORDER BY date, id"),
         sets=rows("SELECT * FROM sets ORDER BY date, id"),
         pain=rows("SELECT * FROM painlog ORDER BY date, id"),
+        intake=rows("SELECT * FROM intake ORDER BY date"),
+        infusions=rows("SELECT * FROM infusions ORDER BY date, id"),
     )
+
+
+@bp.route("/api/intake/add", methods=["POST"])
+def intake_add():
+    """Add caffeine (mg) and water (ml) on top of what is logged for the day."""
+    b = request.get_json(force=True)
+    day = b.get("date") or datetime.date.today().isoformat()
+    caf, water = int(b.get("caffeine_mg") or 0), int(b.get("water_ml") or 0)
+    con = connect()
+    con.execute("INSERT INTO intake(date, caffeine_mg, water_ml, drinks) VALUES (?,?,?,?) ON CONFLICT(date) DO UPDATE SET "
+                "caffeine_mg=MAX(0, caffeine_mg+excluded.caffeine_mg), water_ml=MAX(0, water_ml+excluded.water_ml), drinks=MAX(0, drinks+excluded.drinks)",
+                (day, caf, water, 1 if caf > 0 else 0))
+    con.commit()
+    con.close()
+    return jsonify(ok=True)
+
+
+@bp.route("/api/infusions", methods=["POST"])
+def infusion_add():
+    b = request.get_json(force=True)
+    if not b.get("date"):
+        return jsonify(error="Date is required.")
+    _save("infusions", ["date", "drug", "dose", "notes"], b)
+    return jsonify(ok=True)
+
+
+@bp.route("/api/infusions/<int:i>", methods=["DELETE"])
+def infusion_del(i):
+    con = connect()
+    con.execute("DELETE FROM infusions WHERE id=?", (i,))
+    con.commit()
+    con.close()
+    return jsonify(ok=True)
 
 
 @bp.route("/api/symptoms", methods=["POST"])

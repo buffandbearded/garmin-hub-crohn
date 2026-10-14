@@ -46,6 +46,12 @@ CREATE TABLE IF NOT EXISTS sets (
   id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, session TEXT, exercise TEXT,
   set_no INTEGER, weight REAL, reps INTEGER, rir INTEGER
 );
+CREATE TABLE IF NOT EXISTS intake (
+  date TEXT PRIMARY KEY, caffeine_mg INTEGER DEFAULT 0, water_ml INTEGER DEFAULT 0, drinks INTEGER DEFAULT 0
+);
+CREATE TABLE IF NOT EXISTS infusions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, drug TEXT, dose TEXT, notes TEXT
+);
 CREATE TABLE IF NOT EXISTS painlog (
   id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, joint TEXT, level INTEGER, exercise TEXT, notes TEXT
 );
@@ -67,6 +73,9 @@ DEFAULT_SETTINGS = {
     "crohn_mre": "",
     "crohn_scopes": "",
     "crohn_notes": "",
+    "infusion_weeks": "8",
+    "autosync": "1",
+    "autosync_hours": "6",
 }
 
 

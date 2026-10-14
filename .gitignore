@@ -4,6 +4,7 @@ hub.db-*
 lab_uploads/
 activity_cache/
 _backup_*/
+backups/
 
 # python
 .venv/

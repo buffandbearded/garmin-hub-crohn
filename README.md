@@ -21,8 +21,10 @@ Flask + SQLite + vanilla JS + Chart.js. No accounts, no cloud, no tracking. Ever
 | **Lifting** | Set-by-set logging with double progression, hard-set volume per muscle, estimated 1RM, joint-pain log and exercise swaps. |
 | **Program** | 3- or 4-day hypertrophy programmes with a green / yellow / red readiness check that trims or skips sessions. |
 | **Recepti** | Croatian recipes with macros and gluten/lactose tags; one click adds them to your day. |
-| **Food log** | Meal log with reaction ratings to spot trigger foods, plus **meal photo estimates**: take a picture and a local vision model suggests the items and macros for you to check and save. |
-| **Medication** | Medication list with general notes on effects on training, sleep and recovery. |
+| **Food log** | Meal log with reaction ratings to spot trigger foods, plus **meal photo estimates**, **saved meals** for one-tap logging, a **nutrition-label scan**, and quick **caffeine and water** counters. |
+| **Medication** | Medication list with general notes on effects on training, sleep and recovery, plus an **infusion tracker** (next due date, dose log, reminder on Overview). |
+| **Insights** | Weekly review (last 7 days vs the 7 before), a "what moves together" comparison of your own days (sleep, HRV, stress, caffeine, training and symptoms), how you look around each infusion, and automatic sync and backup. |
+| **Report** | A printable health summary for a doctor's visit, in **English or Croatian**: symptoms, approximate HBI, labs, medication, trends, food reactions and a box for your questions. Print it or save it as a PDF. |
 
 ## Requirements
 
@@ -88,6 +90,18 @@ The hub starts the engine when needed and the model is unloaded after a few idle
 
 If the engine crashes on image input, it is usually the GPU backend: on some AMD cards Vulkan fails while decoding images. For Ollama, set the environment variable `OLLAMA_VULKAN=0` (the hub does this when it starts Ollama itself) and restart Ollama.
 
+## Saved meals and label scan
+
+After a photo estimate, correct the numbers once and press **Save meal**. It appears as a chip above the photo button; tapping it loads the items again and changing the grams rescales the macros. **Scan a label** reads the nutrition table on a package (per 100 g, converted to what you ate), which is much more accurate than estimating a plate.
+
+## Report for your doctor
+
+The **Report** tab builds a one-to-three page summary of the last 3, 6 or 12 months. Switch the language between English and Croatian, add your name and your questions, then press **Print / Save as PDF**. The text of lab names, headings and explanations is translated; free text you typed (medication history, scope reports) is shown as you wrote it. It is a summary of self-tracked data, not a medical record.
+
+## Automatic sync and backup
+
+While the hub is open it syncs the last 3 days from Garmin every few hours (only after you have signed in once with `sync.py`) and writes a daily copy of `hub.db`, keeping the newest 14. Both are controlled on the Insights tab. Point the backup folder at a cloud-synced directory (OneDrive, Google Drive, Dropbox) to get an off-site copy.
+
 ## How things work
 
 - **Garmin sync** (`sync.py`) uses the unofficial [`garminconnect`](https://github.com/cyberjunky/python-garminconnect) library. Garmin can change things without notice; if sync breaks, run `pip install -U garminconnect`.
@@ -102,7 +116,8 @@ If the engine crashes on image input, it is usually the GPU backend: on some AMD
 app.py              Flask app and core API
 extra_routes.py     Symptoms, labs, sets, pain log endpoints
 activity_detail.py  Per-activity GPS / series / splits / zones
-meal_vision.py      Meal photo -> macro estimate (Ollama / LM Studio)
+meal_vision.py      Meal photo / label -> macros, saved meals (Ollama / LM Studio)
+autotasks.py        Background Garmin sync and daily database backup
 labparse.py         Lab report reader
 sync.py             Garmin Connect sync
 db.py               SQLite schema and default settings

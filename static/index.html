@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="/static/style.css?v=7">
+<link rel="stylesheet" href="/static/style.css?v=10">
 </head>
 <body>
 <header>
@@ -24,6 +24,7 @@
 <main>
 
 <section id="overview">
+  <div id="dueBanner"></div>
   <div class="grid" id="cards"></div>
   <div class="grid" style="margin-top:14px">
     <div class="card wide"><h3>What the data says</h3><div id="insights"></div></div>
@@ -107,6 +108,7 @@
 <section id="food">
   <div class="grid">
     <div class="card wide" id="mealCard"></div>
+    <div class="card wide" id="intakeCard"></div>
     <div class="card wide"><h3>Food reaction log</h3>
       <div class="sub">Log a meal, then add how you felt later (you can edit an entry afterwards). Rate "reaction" with your own judgement.</div>
       <div class="row">
@@ -140,6 +142,7 @@
 
 <section id="meds">
   <div class="grid">
+    <div class="card wide" id="infCard"></div>
     <div class="card wide"><h3>My medication</h3>
       <div class="row">
         <label>Name<input id="m_name" placeholder="e.g. Prednisone"></label>
@@ -157,6 +160,8 @@
   </div>
 </section>
 
+<section id="weekly"></section>
+<section id="report"></section>
 </main>
 <script src="/static/charts.js?v=3"></script>
 <script src="/static/ui.js?v=3"></script>
@@ -165,9 +170,12 @@
 <script src="/static/lift.js?v=3"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/static/activity.js?v=2"></script>
-<script src="/static/meal.js?v=2"></script>
+<script src="/static/meal.js?v=3"></script>
+<script src="/static/report.js?v=1"></script>
+<script src="/static/tracking.js?v=1"></script>
+<script src="/static/insights.js?v=1"></script>
 <script>
-const TABS=[["overview","Overview"],["plan","Plan & Goals"],["body","Body & Calories"],["sleep","Sleep"],["training","Training"],["recovery","Recovery"],["crohn","Crohn's"],["labs","Labs"],["lift","Lifting"],["program","Program"],["recipes","Recepti"],["food","Food log"],["meds","Medication"]];
+const TABS=[["overview","Overview"],["plan","Plan & Goals"],["body","Body & Calories"],["sleep","Sleep"],["training","Training"],["recovery","Recovery"],["crohn","Crohn's"],["labs","Labs"],["lift","Lifting"],["program","Program"],["recipes","Recepti"],["food","Food log"],["meds","Medication"],["weekly","Insights"],["report","Report"]];
 let D=null,MI={},RC=null,FOOD=[],charts={},RECSTATE={tags:new Set(),q:"",scale:{}};
 const $=id=>document.getElementById(id);
 const avg=a=>{a=a.filter(v=>v!=null&&!isNaN(v));return a.length?a.reduce((x,y)=>x+y,0)/a.length:null};
@@ -206,7 +214,7 @@ function show(t){
 }
 function render(){
   const on=document.querySelector("section.on")?.id||"overview";
-  ({overview,plan:renderPlan,body:renderBody,sleep:renderSleep,training:renderTraining,recovery:renderRecovery,crohn:renderCrohn,labs:renderLabs,lift:renderLift,program:renderProgram,recipes:renderRecipes,food:renderFood,meds:renderMeds}[on]||overview)();
+  ({overview,plan:renderPlan,body:renderBody,sleep:renderSleep,training:renderTraining,recovery:renderRecovery,crohn:renderCrohn,labs:renderLabs,lift:renderLift,program:renderProgram,recipes:renderRecipes,food:renderFood,meds:renderMeds,weekly:window.renderInsights||(()=>{}),report:window.renderReport||(()=>{})}[on]||overview)();
 }
 
 /* ---------- plan engine ---------- */
@@ -277,6 +285,7 @@ function card(title,big,sub,pct,color){
 
 /* ---------- overview ---------- */
 function overview(){
+  if(window.renderDue)renderDue();
   const P=planCalc(),S=D.settings,dl=D.daily;
   const sl=avg(lastN(dl,7).map(d=>d.sleep_sec!=null?d.sleep_sec/3600:null)),stg=+S.sleep_target_h;
   const pr=avg(lastN(dl,7).map(d=>d.protein_g));
@@ -430,6 +439,7 @@ function fillFood(e){
 }
 function renderFood(){
   if(window.renderMeal)renderMeal();
+  if(window.renderIntake)renderIntake();
   if(!$("f_date").value)fillFood({date:todayIso(),time:new Date().toTimeString().slice(0,5),meal:"lunch"});
   const num=id=>$(id).value===""?null:+$(id).value;
   $("f_save").onclick=async()=>{
@@ -476,6 +486,7 @@ function matchInfo(name){
   return null;
 }
 function renderMeds(){
+  if(window.renderInfusions)renderInfusions();
   $("medlist").innerHTML=D.meds.length?`<table><tr><th>Name</th><th>Dose</th><th>Schedule</th><th>Started</th><th>Notes</th><th></th></tr>`+
     D.meds.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.dose)}</td><td>${esc(m.schedule)}</td><td>${m.started||""}</td><td>${esc(m.notes)}</td><td><button class="ghost" data-del="${m.id}">Remove</button></td></tr>`).join("")+`</table>`:"<div class='sub'>No medication added yet.</div>";
   $("medinfo").innerHTML=D.meds.length?D.meds.map(m=>{const i=matchInfo(m.name);

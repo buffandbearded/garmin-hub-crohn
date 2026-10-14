@@ -8,11 +8,13 @@ from db import connect
 from extra_routes import bp as extra_bp
 from activity_detail import bp as activity_bp
 from meal_vision import bp as meal_bp
+from autotasks import bp as auto_bp, start_background, do_sync
 
 app = Flask(__name__, static_folder="static")
 app.register_blueprint(extra_bp)
 app.register_blueprint(activity_bp)
 app.register_blueprint(meal_bp)
+app.register_blueprint(auto_bp)
 ROOT = Path(__file__).parent
 
 # General reference only. Not medical advice: confirm anything that matters with your doctor/pharmacist.
@@ -217,18 +219,16 @@ def medinfo():
 
 @app.route("/api/sync", methods=["POST"])
 def sync():
-    days = str(int(request.args.get("days", 7)))
+    days = int(request.args.get("days", 7))
     try:
-        r = subprocess.run(
-            [sys.executable, str(ROOT / "sync.py"), "--days", days],
-            capture_output=True, text=True, timeout=600, cwd=ROOT, stdin=subprocess.DEVNULL,
-        )
-        return jsonify(ok=r.returncode == 0, output=(r.stdout + r.stderr)[-1500:])
+        ok, out = do_sync(days)
+        return jsonify(ok=ok, output=out)
     except Exception as e:
         return jsonify(ok=False, output=str(e))
 
 
 if __name__ == "__main__":
     connect().close()
+    start_background()
     print("Open http://localhost:5055")
     app.run(host="127.0.0.1", port=5055, debug=False)
