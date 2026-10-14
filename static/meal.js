@@ -140,12 +140,24 @@
     if (!names.length) return;
     btn.disabled = true;
     const day = todayIso(), now = new Date().toTimeString().slice(0, 5);
-    await fetch("/api/food", { method: "POST", body: JSON.stringify({ date: day, time: now, meal: document.getElementById("m_meal").value, foods: names.join(", "), recipe: "",
-      gluten: document.getElementById("m_g").checked ? 1 : 0, lactose: document.getElementById("m_l").checked ? 1 : 0, reaction: null,
-      notes: `Photo estimate: ${Math.round(t.kcal)} kcal, P ${Math.round(t.protein_g)} g, C ${Math.round(t.carbs_g)} g, F ${Math.round(t.fat_g)} g` }) });
-    await fetch("/api/log/add", { method: "POST", body: JSON.stringify({ date: day, kcal_in: Math.round(t.kcal), protein_g: Math.round(t.protein_g) }) });
+    const post = async (url, body) => {
+      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      if (!r.ok) throw new Error(url + " returned " + r.status);
+    };
+    const say = (html, cls) => { const m = document.getElementById("m_msg"); if (m) { m.className = cls || "good"; m.innerHTML = html; m.scrollIntoView({ block: "nearest" }); } };
+    try {
+      await post("/api/food", { date: day, time: now, meal: document.getElementById("m_meal").value, foods: names.join(", "), recipe: "",
+        gluten: document.getElementById("m_g").checked ? 1 : 0, lactose: document.getElementById("m_l").checked ? 1 : 0, reaction: null,
+        notes: `Photo estimate: ${Math.round(t.kcal)} kcal, P ${Math.round(t.protein_g)} g, C ${Math.round(t.carbs_g)} g, F ${Math.round(t.fat_g)} g` });
+      await post("/api/log/add", { date: day, kcal_in: Math.round(t.kcal), protein_g: Math.round(t.protein_g) });
+    } catch (e) {
+      btn.disabled = false;
+      say("Could not save: " + esc(e.message), "bad");
+      return;
+    }
     RES = null; blob = null; preview = null;
     await load();   // refreshes the log and today's totals
+    say(`Added to today: <b>${Math.round(t.kcal)}</b> kcal, <b>${Math.round(t.protein_g)}</b> g protein (${esc(names.join(", "))}). It is in the food list below and in today's calories.`);
   }
 
   window.renderMeal = function () { shell(); };
