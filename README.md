@@ -21,7 +21,7 @@ Flask + SQLite + vanilla JS + Chart.js. No accounts, no cloud, no tracking. Ever
 | **Lifting** | Set-by-set logging with double progression, hard-set volume per muscle, estimated 1RM, joint-pain log and exercise swaps. |
 | **Program** | 3- or 4-day hypertrophy programmes with a green / yellow / red readiness check that trims or skips sessions. |
 | **Recepti** | Croatian recipes with macros and gluten/lactose tags; one click adds them to your day. |
-| **Food log** | Meal log with reaction ratings to spot trigger foods. |
+| **Food log** | Meal log with reaction ratings to spot trigger foods, plus **meal photo estimates**: take a picture and a local vision model suggests the items and macros for you to check and save. |
 | **Medication** | Medication list with general notes on effects on training, sleep and recovery. |
 
 ## Requirements
@@ -76,6 +76,18 @@ The computer has to be on, awake and running the hub for the page to load. The h
 
 > Do not use port forwarding or Tailscale Funnel for this. The hub has no login, so it must only be reachable from your own devices.
 
+## Meal photos (optional)
+
+The Food log tab can estimate calories and macros from a photo of your plate. It uses a vision model that runs **on your own computer**, so the photo never leaves it.
+
+1. Install [Ollama](https://ollama.com) (or [LM Studio](https://lmstudio.ai)) and download a vision model once, for example `ollama pull qwen2.5vl:7b`.
+2. In the Food log tab, open **Model settings**, choose the engine and the model.
+3. Take or choose a photo, optionally add a note ("chicken, rice and salad"), and press **Estimate**. Check and correct the items, then save.
+
+The hub starts the engine when needed and the model is unloaded after a few idle minutes, which frees your GPU. Estimates from a photo are rough (expect 20-30% error or more), so treat them as a starting point.
+
+If the engine crashes on image input, it is usually the GPU backend: on some AMD cards Vulkan fails while decoding images. For Ollama, set the environment variable `OLLAMA_VULKAN=0` (the hub does this when it starts Ollama itself) and restart Ollama.
+
 ## How things work
 
 - **Garmin sync** (`sync.py`) uses the unofficial [`garminconnect`](https://github.com/cyberjunky/python-garminconnect) library. Garmin can change things without notice; if sync breaks, run `pip install -U garminconnect`.
@@ -90,6 +102,7 @@ The computer has to be on, awake and running the hub for the page to load. The h
 app.py              Flask app and core API
 extra_routes.py     Symptoms, labs, sets, pain log endpoints
 activity_detail.py  Per-activity GPS / series / splits / zones
+meal_vision.py      Meal photo -> macro estimate (Ollama / LM Studio)
 labparse.py         Lab report reader
 sync.py             Garmin Connect sync
 db.py               SQLite schema and default settings

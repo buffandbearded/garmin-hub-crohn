@@ -7,10 +7,12 @@ from flask import Flask, jsonify, request, send_from_directory
 from db import connect
 from extra_routes import bp as extra_bp
 from activity_detail import bp as activity_bp
+from meal_vision import bp as meal_bp
 
 app = Flask(__name__, static_folder="static")
 app.register_blueprint(extra_bp)
 app.register_blueprint(activity_bp)
+app.register_blueprint(meal_bp)
 ROOT = Path(__file__).parent
 
 # General reference only. Not medical advice: confirm anything that matters with your doctor/pharmacist.

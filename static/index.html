@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="/static/style.css?v=6">
+<link rel="stylesheet" href="/static/style.css?v=7">
 </head>
 <body>
 <header>
@@ -106,6 +106,7 @@
 
 <section id="food">
   <div class="grid">
+    <div class="card wide" id="mealCard"></div>
     <div class="card wide"><h3>Food reaction log</h3>
       <div class="sub">Log a meal, then add how you felt later (you can edit an entry afterwards). Rate "reaction" with your own judgement.</div>
       <div class="row">
@@ -164,6 +165,7 @@
 <script src="/static/lift.js?v=3"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/static/activity.js?v=2"></script>
+<script src="/static/meal.js?v=1"></script>
 <script>
 const TABS=[["overview","Overview"],["plan","Plan & Goals"],["body","Body & Calories"],["sleep","Sleep"],["training","Training"],["recovery","Recovery"],["crohn","Crohn's"],["labs","Labs"],["lift","Lifting"],["program","Program"],["recipes","Recepti"],["food","Food log"],["meds","Medication"]];
 let D=null,MI={},RC=null,FOOD=[],charts={},RECSTATE={tags:new Set(),q:"",scale:{}};
@@ -427,6 +429,7 @@ function fillFood(e){
   $("f_save").textContent=editId?"Update entry":"Save entry";
 }
 function renderFood(){
+  if(window.renderMeal)renderMeal();
   if(!$("f_date").value)fillFood({date:todayIso(),time:new Date().toTimeString().slice(0,5),meal:"lunch"});
   const num=id=>$(id).value===""?null:+$(id).value;
   $("f_save").onclick=async()=>{
